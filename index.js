@@ -36,6 +36,8 @@ app.post("/webhook", async (req, res) => {
             const from = message.from;
             const text = message.text?.body?.toLowerCase();
 
+            console.log(`📩 Message received from ${from}: ${text}`);
+
             let reply = "Hello 👋 R Style Fashion me aapka swagat hai";
 
             if (text === "hi" || text === "hello") {
@@ -62,6 +64,8 @@ app.post("/webhook", async (req, res) => {
                     }
                 }
             );
+
+            console.log(`📤 Reply sent to ${from}: ${reply.replace(/\n/g, ' ')}`);
         }
 
         res.sendStatus(200);
