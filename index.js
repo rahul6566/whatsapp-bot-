@@ -5,10 +5,10 @@ const axios = require("axios");
 const app = express();
 app.use(bodyParser.json());
 
-// 🔐 CONFIG (change values)
-const VERIFY_TOKEN = "whatsapp_bot_verify_123"; // same token Meta me dalna
-const ACCESS_TOKEN = "EAAUQ4EeGk3QBQXBEVr30ywsBUQk5gBwM2ope6cZBgWo4ucjEulty4xpeWFEVQQjRCVupSc60OG1FepqI6hXH2U8ZCfp7RlIm2TwRh8qITZAEZCqqZCZBlAUfzR0BXQD3xx6GMs8xmaz9PG1Vfk8lZAZArNVWoztFIbgwApscvMG4ZC5hOrzd1ZC5r0NtaeoTh6UedBfXDBqfO99hhO41xllXMmIhizGMhSwEddb0v9mIO2wF6v0vVO92UZAhUzstPP2ZCT0NN0ApXizZAH1H2TTgAhaOxBvXM";
-const PHONE_NUMBER_ID = "846207071714929";
+// 🔐 CONFIG (Using Environment Variables for Security)
+const VERIFY_TOKEN = process.env.VERIFY_TOKEN;
+const ACCESS_TOKEN = process.env.ACCESS_TOKEN;
+const PHONE_NUMBER_ID = process.env.PHONE_NUMBER_ID;
 
 // ✅ Webhook verification (Meta ke liye)
 app.get("/webhook", (req, res) => {
