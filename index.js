@@ -5,7 +5,13 @@ const axios = require("axios");
 const app = express();
 app.use(bodyParser.json());
 
-// 🔐 CONFIG (Using Environment Variables for Security)
+// � Global Debug Log: See every hit to the server
+app.use((req, res, next) => {
+    console.log(`🌐 [${new Date().toISOString()}] ${req.method} ${req.url}`);
+    next();
+});
+
+// �🔐 CONFIG (Using Environment Variables for Security)
 const VERIFY_TOKEN = process.env.VERIFY_TOKEN;
 const ACCESS_TOKEN = process.env.ACCESS_TOKEN;
 const PHONE_NUMBER_ID = process.env.PHONE_NUMBER_ID;
