@@ -27,6 +27,7 @@ app.get("/webhook", (req, res) => {
 // 📩 Incoming message receive
 app.post("/webhook", async (req, res) => {
     try {
+        console.log("📥 Raw Request Body:", JSON.stringify(req.body, null, 2));
         const entry = req.body.entry?.[0];
         const changes = entry?.changes?.[0];
         const value = changes?.value;
