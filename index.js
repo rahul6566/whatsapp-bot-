@@ -5,13 +5,25 @@ const axios = require("axios");
 const app = express();
 app.use(bodyParser.json());
 
-// � Global Debug Log: See every hit to the server
+//  Global Debug Log: See every hit to the server
 app.use((req, res, next) => {
     console.log(`🌐 [${new Date().toISOString()}] ${req.method} ${req.url}`);
     next();
 });
 
-// �🔐 CONFIG (Using Environment Variables for Security)
+// 🏥 Health Check: Confirm environment variables are loaded
+app.get("/health", (req, res) => {
+    res.json({
+        status: "alive",
+        config: {
+            verify_token_set: !!process.env.VERIFY_TOKEN,
+            access_token_set: !!process.env.ACCESS_TOKEN ? "✅ Set (Secret)" : "❌ Not Set",
+            phone_id: process.env.PHONE_NUMBER_ID || "❌ Not Set"
+        }
+    });
+});
+
+// 🔐 CONFIG (Using Environment Variables for Security)
 const VERIFY_TOKEN = process.env.VERIFY_TOKEN;
 const ACCESS_TOKEN = process.env.ACCESS_TOKEN;
 const PHONE_NUMBER_ID = process.env.PHONE_NUMBER_ID;
