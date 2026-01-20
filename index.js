@@ -75,7 +75,7 @@ app.post("/webhook", async (req, res) => {
 
             // 🤖 Smart Logic:
             if (["hi", "hello", "hey"].includes(text)) {
-                reply = "Hi 👋 *R Style Fashion* me swagat hai!\n\nMain aapki kaise madad karu?\n1️⃣ Hamare Products\n2️⃣ Order Status\n3️⃣ Baat karein (Support)\n\nYa bas mujhse Hinglish mein puchiye, jaise: _'Jeans ka price kya hai?'_";
+                reply = "Hi there! This is *R-bot*\nfrom *R Style Fashion* 👔\n\nHow can I help you?\n\nWhich language do you prefer?\n- Hindi\n- English\n\n(Aap mujhse kisi bhi bhasha mein baat kar sakte hain!)";
             } else if (text === "1") {
                 reply = "🛍️ *Hamare Best Sellers:*\n\n👕 *Shirts* - ₹499 se shuru\n👖 *Jeans* - ₹799 se shuru\n🧥 *Jackets* - ₹999 se shuru\n\nOrder karne ke liye photo bhejein!";
             } else if (text === "2") {
