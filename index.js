@@ -81,7 +81,7 @@ app.post("/webhook", async (req, res) => {
             } else if (text === "2") {
                 reply = "📦 *Order Status:*\nAapna Order ID likh kar bhejein (Example: #Order123)";
             } else if (text === "3") {
-                reply = "📞 *Customer Support:*\nTeam se baat karne ke liye call karein: +91-9876543210\nTime: 10 AM - 7 PM";
+                reply = "📞 *Customer Support:*\nTeam se baat karne ke liye call karein: +91-8758424155\nTime: 10 AM - 7 PM";
             } else {
                 // 🧠 AI Response (Groq) for everything else
                 if (groq) {
