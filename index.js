@@ -102,12 +102,12 @@ app.post("/webhook", async (req, res) => {
                                     content: text
                                 }
                             ],
-                            model: "llama3-8b-8192",
+                            model: "llama-3.3-70b-versatile",
                         });
                         reply = chatCompletion.choices[0]?.message?.content || "Maaf karein, mujhe samajh nahi aaya. 1 dabayein products ke liye.";
                     } catch (aiErr) {
-                        console.error("❌ Groq Error:", aiErr.message);
-                        reply = "Server busy hai, kripya 1, 2, ya 3 dabayein.";
+                        console.error("❌ Groq API Error:", aiErr.response?.data || aiErr.message);
+                        reply = "Mafi chahta hoon, mera AI dimaag abhi thoda busy hai. 😅\n\nKripya 1, 2, ya 3 dabayein ya thodi der baad try karein.";
                     }
                 } else {
                     reply = "AI mode off hai. Kripya 1, 2, ya 3 dabayein.";
