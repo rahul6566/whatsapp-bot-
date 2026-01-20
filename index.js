@@ -71,16 +71,47 @@ app.post("/webhook", async (req, res) => {
 
             console.log(`📩 Message received from ${from}: ${text}`);
 
-            let reply = "Hello 👋 R Style Fashion me aapka swagat hai";
+            let reply = "";
 
-            if (text === "hi" || text === "hello") {
-                reply = "Hi 👋\n1️⃣ Products\n2️⃣ Order Status\n3️⃣ Support\nReply with number";
+            // 🤖 Smart Logic:
+            if (["hi", "hello", "hey"].includes(text)) {
+                reply = "Hi 👋 *R Style Fashion* me swagat hai!\n\nMain aapki kaise madad karu?\n1️⃣ Hamare Products\n2️⃣ Order Status\n3️⃣ Baat karein (Support)\n\nYa bas mujhse Hinglish mein puchiye, jaise: _'Jeans ka price kya hai?'_";
             } else if (text === "1") {
-                reply = "🛍️ Hamare Products:\n- Shirts\n- Jeans\n- Jackets";
+                reply = "🛍️ *Hamare Best Sellers:*\n\n👕 *Shirts* - ₹499 se shuru\n👖 *Jeans* - ₹799 se shuru\n🧥 *Jackets* - ₹999 se shuru\n\nOrder karne ke liye photo bhejein!";
             } else if (text === "2") {
-                reply = "📦 Apna order ID bhejein";
+                reply = "📦 *Order Status:*\nAapna Order ID likh kar bhejein (Example: #Order123)";
             } else if (text === "3") {
-                reply = "📞 Support team aapse jaldi contact karegi";
+                reply = "📞 *Customer Support:*\nTeam se baat karne ke liye call karein: +91-9876543210\nTime: 10 AM - 7 PM";
+            } else {
+                // 🧠 AI Response (Groq) for everything else
+                if (groq) {
+                    try {
+                        const chatCompletion = await groq.chat.completions.create({
+                            messages: [
+                                {
+                                    role: "system",
+                                    content: "You are a helpful, friendly shop assistant for 'R Style Fashion', a clothing brand in India. \n" +
+                                        "Your Goal: Answer customer queries in Hinglish (Hindi + English mix). \n" +
+                                        "Tone: Casual, using emojis, helpful. \n" +
+                                        "Key Info: We sell Shirts (499+), Jeans (799+), Jackets (999+). \n" +
+                                        "If unsure, ask them to choose options 1, 2, or 3. \n" +
+                                        "Keep replies short (under 50 words)."
+                                },
+                                {
+                                    role: "user",
+                                    content: text
+                                }
+                            ],
+                            model: "llama3-8b-8192",
+                        });
+                        reply = chatCompletion.choices[0]?.message?.content || "Maaf karein, mujhe samajh nahi aaya. 1 dabayein products ke liye.";
+                    } catch (aiErr) {
+                        console.error("❌ Groq Error:", aiErr.message);
+                        reply = "Server busy hai, kripya 1, 2, ya 3 dabayein.";
+                    }
+                } else {
+                    reply = "AI mode off hai. Kripya 1, 2, ya 3 dabayein.";
+                }
             }
 
             await axios.post(
