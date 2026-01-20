@@ -45,6 +45,9 @@ app.get("/webhook", (req, res) => {
 // 📩 Incoming message receive
 app.post("/webhook", async (req, res) => {
     try {
+        // ⚡ FAST ACKNOWLEDGE: Meta ko turant bata do ki message mil gaya
+        res.sendStatus(200);
+
         console.log("📥 Raw Request Body:", JSON.stringify(req.body, null, 2));
         const entry = req.body.entry?.[0];
         const changes = entry?.changes?.[0];
@@ -86,11 +89,9 @@ app.post("/webhook", async (req, res) => {
 
             console.log(`📤 Reply sent to ${from}: ${reply.replace(/\n/g, ' ')}`);
         }
-
-        res.sendStatus(200);
     } catch (err) {
-        console.error(err.response?.data || err.message);
-        res.sendStatus(500);
+        // Note: Humne pehle hi 200 bhej diya hai, toh ab error log karein bas
+        console.error("❌ Processing Error:", err.response?.data || err.message);
     }
 });
 
