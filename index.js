@@ -27,6 +27,17 @@ app.get("/health", (req, res) => {
 const VERIFY_TOKEN = process.env.VERIFY_TOKEN;
 const ACCESS_TOKEN = process.env.ACCESS_TOKEN;
 const PHONE_NUMBER_ID = process.env.PHONE_NUMBER_ID;
+const GROQ_API_KEY = process.env.GROQ_API_KEY; // 🧠 New: Groq Key
+
+// 🧠 AI Logic: Groq Initialization
+const Groq = require("groq-sdk");
+let groq = null;
+if (GROQ_API_KEY) {
+    groq = new Groq({ apiKey: GROQ_API_KEY });
+    console.log("✅ Groq AI Initialized");
+} else {
+    console.warn("⚠️ GROQ_API_KEY missing - Bot will work in Basic Mode");
+}
 
 // ✅ Webhook verification (Meta ke liye)
 app.get("/webhook", (req, res) => {
